@@ -1,1 +1,34 @@
-<p>list works!</p>
+<mat-card class="form-card">
+  <form [formGroup]="newItemForm" (ngSubmit)="addItem()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwa produktu</mat-label>
+      <input matInput formControlName="name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Sklep</mat-label>
+      <input matInput formControlName="store" />
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit">Dodaj produkt</button>
+  </form>
+</mat-card>
+
+<mat-card class="list-card" *ngFor="let item of items">
+  <mat-checkbox [checked]="item.bought" (change)="toggleBought(item)">
+    <span [ngStyle]="{ 'text-decoration': item.bought ? 'line-through' : 'none' }">
+      {{ item.name }}
+      <small *ngIf="item.store">({{ item.store }})</small>
+    </span>
+  </mat-checkbox>
+
+  <div class="meta">
+    <small>{{ item.date | date: 'mediumDate' }}</small>
+  </div>
+
+  <div class="actions">
+    <button mat-icon-button color="warn" (click)="item._id && deleteItem(item._id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</mat-card>

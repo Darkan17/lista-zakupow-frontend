@@ -1,0 +1,33 @@
+.form-card {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+mat-form-field {
+  display: block;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+button[type='submit'] {
+  margin-top: 0.5rem;
+}
+
+.list-card {
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.meta {
+  font-size: 0.75rem;
+  color: gray;
+  margin-left: 1rem;
+}
+
+.actions {
+  margin-left: auto;
+}
