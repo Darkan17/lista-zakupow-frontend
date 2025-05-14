@@ -1,34 +1,46 @@
 <mat-card class="form-card">
-  <form [formGroup]="newItemForm" (ngSubmit)="addItem()">
-    <mat-form-field appearance="fill">
+  <h2>Nowy produkt</h2>
+  <form [formGroup]="newItemForm" (ngSubmit)="addItem()" class="form-container">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nazwa produktu</mat-label>
       <input matInput formControlName="name" required />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Sklep</mat-label>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Sklep (opcjonalnie)</mat-label>
       <input matInput formControlName="store" />
     </mat-form-field>
 
-    <button mat-flat-button color="primary" type="submit">Dodaj produkt</button>
+    <button mat-flat-button color="accent" type="submit" [disabled]="newItemForm.invalid">
+      <mat-icon>add_shopping_cart</mat-icon> Dodaj
+    </button>
   </form>
 </mat-card>
 
-<mat-card class="list-card" *ngFor="let item of items">
-  <mat-checkbox [checked]="item.bought" (change)="toggleBought(item)">
-    <span [ngStyle]="{ 'text-decoration': item.bought ? 'line-through' : 'none' }">
-      {{ item.name }}
-      <small *ngIf="item.store">({{ item.store }})</small>
-    </span>
-  </mat-checkbox>
+<div class="grid">
+  <mat-card class="item-card" *ngFor="let item of items" [ngClass]="{ bought: item.bought }">
+    <div class="item-header">
+      <h3>{{ item.name }}</h3>
+      <span *ngIf="item.bought" class="badge">Kupione</span>
+    </div>
 
-  <div class="meta">
-    <small>{{ item.date | date: 'mediumDate' }}</small>
-  </div>
+    <div class="info">
+      <div class="info-row" *ngIf="item.store">
+        <mat-icon>store</mat-icon> {{ item.store }}
+      </div>
+      <div class="info-row">
+        <mat-icon>calendar_today</mat-icon> {{ item.date | date: 'mediumDate' }}
+      </div>
+    </div>
 
-  <div class="actions">
-    <button mat-icon-button color="warn" (click)="item._id && deleteItem(item._id)">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
-</mat-card>
+    <mat-card-actions align="end">
+      <mat-checkbox [checked]="item.bought" (change)="toggleBought(item)">
+        Kupione
+      </mat-checkbox>
+      <span class="spacer"></span>
+      <button mat-icon-button color="warn" (click)="item._id && deleteItem(item._id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
